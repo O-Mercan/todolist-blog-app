@@ -1,55 +1,19 @@
 {
   "todos": [
     {
-      "id": 1,
-      "title": "Learn ReactJS basics",
+      "id": "edbb",
+      "title": "Task 2 Updated",
       "completed": false,
-      "createdAt": "2025-03-15T10:00:00Z",
-      "userId": "tempUserId"
+      "userId": "tempUserId",
+      "createdAt": "2025-03-15T23:13:38.538Z"
     },
     {
-      "id": 2,
-      "title": "Practice ReactJS",
+      "id": "9c12",
+      "title": "Task 3",
       "completed": false,
-      "createdAt": "2025-03-15T10:00:00Z",
-      "userId": "tempUserId"
-    },
-    {
-      "id": 3,
-      "title": "Learn Redux",
-      "completed": false,
-      "createdAt": "2025-03-15T10:00:00Z",
-      "userId": "tempUserId"
-    },
-    {
-      "id": 4,
-      "title": "Code portfolio in React Native",
-      "completed": false,
-      "createdAt": "2025-03-15T10:00:00Z",
-      "userId": "tempUserId"
-    },
-    {
-      "id": 5,
-      "title": "New Task",
-      "completed": true,
-      "createdAt": "2025-03-16T12:00:00Z",
-      "userId": "tempUserId"
+      "userId": "tempUserId",
+      "createdAt": "2025-03-15T23:13:42.773Z"
     }
   ],
-  "blogs": [
-    {
-      "id": 1,
-      "title": "Örnek Başlık 1",
-      "content": "Örnek İçerik 1",
-      "author": "Yazar 1",
-      "tags": [
-        "Etiket 1",
-        "Etiket 2"
-      ],
-      "category": "Kategori 1",
-      "likes": 10,
-      "dislikes": 2,
-      "date": "2023-01-01"
-    }
-  ]
+  "blogs": []
 }

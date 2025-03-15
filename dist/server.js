@@ -60,7 +60,7 @@ app.get("/register", (req, res) => res.render("register", { csrfToken: req.csrfT
 app.get("/login", (req, res) => res.render("login", { csrfToken: req.csrfToken() }));
 app.get("/todo", (req, res) => res.render("todo", { csrfToken: req.csrfToken() }));
 // Sunucuyu başlat
-const PORT = process.env.PORT || 1111;
+const PORT = process.env.PORT || 2000;
 app.listen(PORT, () => {
     console.log(`Sunucu http://localhost:${PORT} adresinde çalışıyor`);
 });
