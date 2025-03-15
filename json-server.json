@@ -1,0 +1,11 @@
+{
+  "port": 5000,
+  "host": "localhost",
+  "delay": 1000,
+  "watch": "db.json",
+  "routes": {
+    "/api/blogs": "/blogs"
+  },
+  "/todos/done": "/todos?completed=true",
+  "/todos/all": "/todos"
+}

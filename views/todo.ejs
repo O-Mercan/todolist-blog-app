@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ToDo List</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Bootstrap CSS dosyasını dahil et -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <!-- Font Awesome CSS dosyasını dahil et -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Özel CSS dosyasını dahil et -->
+    <link rel="stylesheet" href="/css/index.css" />
+    <!-- Favicon dosyasını dahil et -->
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+      /* ToDo List konteyneri için stil */
+      .todo-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      /* Görev ekleme alanı için stil */
+      .todo-input {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .todo-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .todo-input button {
+        padding: 10px 20px;
+        background: #17a2b8;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      /* Sekme butonları için stil */
+      .todo-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .todo-tab {
+        padding: 10px 20px;
+        background: #17a2b8;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .todo-tab.active {
+        background: #006d77;
+      }
+      /* Görev öğesi için stil */
+      .todo-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        margin-bottom: 10px;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+      .todo-item.completed .todo-title {
+        text-decoration: line-through;
+        text-decoration-color: red;
+        color: #888;
+      }
+      /* Görev başlığı için stil */
+      .todo-title {
+        flex: 1;
+        margin-right: 15px;
+      }
+      .todo-title input {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      /* Görev işlemleri (onay kutusu, düzenle, sil) için stil */
+      .todo-item .actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+      .todo-item .checkbox-wrapper {
+        position: relative;
+        width: 24px;
+        height: 24px;
+      }
+      .todo-item .checkbox-wrapper input {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+        pointer-events: auto;
+      }
+      .todo-item .checkbox-wrapper .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 24px;
+        height: 24px;
+        border: 2px solid #ccc;
+        border-radius: 3px;
+        background: white;
+        pointer-events: none;
+      }
+      .todo-item .checkbox-wrapper input:checked + .checkmark {
+        background: #17a2b8;
+        border-color: #17a2b8;
+      }
+      .todo-item .checkbox-wrapper .checkmark::after {
+        content: "✓";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 16px;
+        display: none;
+      }
+      .todo-item .checkbox-wrapper input:checked + .checkmark::after {
+        display: block;
+      }
+      /* Düzenle ve sil butonları için stil */
+      .todo-item .edit-btn,
+      .todo-item .delete-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+      }
+      .todo-item .edit-btn {
+        color: #17a2b8;
+      }
+      .todo-item .delete-btn {
+        color: #dc3545;
+      }
+      /* Toplu işlem butonları için stil */
+      .todo-actions {
+        margin-top: 20px;
+      }
+      .todo-actions button {
+        padding: 10px 20px;
+        margin-right: 10px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      /* Hata mesajı için stil */
+      .error-message {
+        color: red;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body class="container-fluid44 py-4">
+    <!-- Navbar'ları dahil et -->
+    <%- include('partials/navbar_first') %>
+    <%- include('partials/navbar_second') %>
+
+    <!-- Ana içerik bölümü -->
+    <main id="main" class="container mt-5">
+      <section class="todo-container">
+        <h2>ToDo List</h2>
+        <!-- Görev ekleme formu -->
+        <div class="todo-input">
+          <input type="text" id="todo-input" placeholder="New Todo" />
+          <button id="add-todo">Add new task</button>
+        </div>
+        <!-- Sekme butonları (Tümü, Yapılacak, Tamamlanmış) -->
+        <div class="todo-tabs">
+          <button class="todo-tab active" data-filter="all">All</button>
+          <button class="todo-tab" data-filter="todo">ToDo</button>
+          <button class="todo-tab" data-filter="done">Done</button>
+        </div>
+        <!-- Hata mesajlarını göstermek için alan -->
+        <div id="error-message" class="error-message"></div>
+        <!-- Görev listesinin gösterileceği alan -->
+        <div id="todo-list"></div>
+        <!-- Toplu işlem butonları -->
+        <div class="todo-actions">
+          <button id="delete-done">Delete done tasks</button>
+          <button id="delete-all">Delete all tasks</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer'ı dahil et -->
+    <%- include('partials/footer') %>
+
+    <!-- Bootstrap ve Popper.js script'lerini dahil et -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <!-- jQuery script'ini dahil et -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Hata mesajını göstermek için fonksiyon
+        const showError = (message) => {
+          $("#error-message").text(message);
+          console.error("Hata: " + message);
+        };
+
+        // ToDo List'i yükleyen fonksiyon
+        const loadTodos = (filter = "all") => {
+          // json-server'dan görev verilerini çek
+          $.ajax({
+            url: "http://localhost:3000/todos",
+            method: "GET",
+            crossDomain: true,
+            success: function (data) {
+              $("#error-message").text(""); // Hata mesajını temizle
+              console.log("Veri alındı:", data); // Alınan veriyi konsola yaz
+              let todos = data;
+              // Filtreye göre görevleri süz
+              if (filter === "todo") todos = todos.filter(todo => !todo.completed);
+              else if (filter === "done") todos = todos.filter(todo => todo.completed);
+
+              const $todoList = $("#todo-list").empty(); // Görev listesini temizle
+              if (todos.length === 0) {
+                // Eğer görev yoksa mesaj göster
+                $todoList.append("<p>No tasks found.</p>");
+              } else {
+                // Her görev için bir öğe oluştur
+                todos.forEach((todo) => {
+                  $todoList.append(`
+                    <div class="todo-item ${todo.completed ? "completed" : ""}" data-id="${todo.id}">
+                      <span class="todo-title">${todo.title}</span>
+                      <div class="actions">
+                        <div class="checkbox-wrapper">
+                          <input type="checkbox" class="toggle-btn" data-id="${todo.id}" ${todo.completed ? "checked" : ""}>
+                          <span class="checkmark"></span>
+                        </div>
+                        <button class="edit-btn" data-id="${todo.id}"><i class="fas fa-pen"></i></button>
+                        <button class="delete-btn" data-id="${todo.id}"><i class="fas fa-trash"></i></button>
+                      </div>
+                    </div>
+                  `);
+                });
+              }
+            },
+            error: function (xhr, status, error) {
+              // Hata durumunda mesaj göster
+              showError(`Failed to load tasks. Status: ${status}, Error: ${error}, Response: ${xhr.responseText}. Please ensure json-server is running at http://localhost:3000.`);
+              console.log("XHR Detayları:", xhr);
+            },
+            complete: function () {
+              console.log("AJAX isteği tamamlandı.");
+            }
+          });
+        };
+
+        // Yeni görev ekleme
+        $("#add-todo").on("click", function () {
+          const title = $("#todo-input").val().trim();
+          if (title) {
+            // Yeni görevi json-server'a kaydet
+            $.ajax({
+              url: "http://localhost:3000/todos",
+              method: "POST",
+              contentType: "application/json",
+              data: JSON.stringify({ title, completed: false, userId: "tempUserId", createdAt: new Date().toISOString() }),
+              crossDomain: true,
+              success: function () {
+                $("#todo-input").val(""); // Giriş alanını temizle
+                loadTodos(); // Listeyi yenile
+              },
+              error: function (xhr, status, error) {
+                showError(`Failed to add task. Status: ${status}, Error: ${error}, Response: ${xhr.responseText}.`);
+              }
+            });
+          } else {
+            showError("Please enter a task title.");
+          }
+        });
+
+        // Görev tamamlandı durumunu değiştirme
+        $(document).on("change", ".toggle-btn", function () {
+          console.log("Checkbox değişikliği algılandı");
+          const id = $(this).data("id");
+          const completed = $(this).is(":checked");
+          console.log("Checkbox ID:", id, "Completed:", completed);
+          // Görevin tamamlanma durumunu güncelle
+          $.ajax({
+            url: `http://localhost:3000/todos/${id}`,
+            method: "PATCH",
+            contentType: "application/json",
+            data: JSON.stringify({ completed: completed }),
+            crossDomain: true,
+            success: function () {
+              loadTodos($(".todo-tab.active").data("filter")); // Listeyi yenile
+            },
+            error: function (xhr, status, error) {
+              showError(`Failed to update task. Status: ${status}, Error: ${error}, Response: ${xhr.responseText}.`);
+            }
+          });
+        });
+
+        // Görev düzenleme
+        $("#todo-list").on("click", ".edit-btn", function () {
+          const $todoItem = $(this).closest(".todo-item");
+          const id = $(this).data("id");
+          console.log("Güncellenecek görev ID’si:", id);
+          const $titleSpan = $todoItem.find(".todo-title");
+          const currentTitle = $titleSpan.text();
+
+          // Başlık alanını bir input alanına dönüştür
+          $titleSpan.html(`<input type="text" class="edit-input" value="${currentTitle}" />`);
+          const $input = $titleSpan.find(".edit-input");
+          $input.focus();
+
+          // Enter tuşuna basıldığında veya inputtan çıkıldığında kaydet
+          $input.on("blur keypress", function (e) {
+            if (e.type === "blur" || (e.type === "keypress" && e.which === 13)) {
+              const newTitle = $(this).val().trim();
+              if (newTitle) {
+                // Görev başlığını güncelle
+                $.ajax({
+                  url: `http://localhost:3000/todos/${id}`,
+                  method: "PATCH",
+                  contentType: "application/json",
+                  data: JSON.stringify({ title: newTitle }),
+                  crossDomain: true,
+                  success: function () {
+                    loadTodos($(".todo-tab.active").data("filter")); // Listeyi yenile
+                  },
+                  error: function (xhr, status, error) {
+                    console.log("Hata Detayları:", { xhr, status, error });
+                    showError(`Failed to update task title. Status: ${status}, Error: ${error}, Response: ${xhr.responseText || "No response"}.`);
+                  }
+                });
+              } else {
+                showError("Task title cannot be empty.");
+                loadTodos($(".todo-tab.active").data("filter"));
+              }
+            }
+          });
+        });
+
+        // Görev silme
+        $("#todo-list").on("click", ".delete-btn", function () {
+          const id = $(this).data("id");
+          // Görevi json-server'dan sil
+          $.ajax({
+            url: `http://localhost:3000/todos/${id}`,
+            method: "DELETE",
+            crossDomain: true,
+            success: function () {
+              loadTodos($(".todo-tab.active").data("filter")); // Listeyi yenile
+            },
+            error: function (xhr, status, error) {
+              showError(`Failed to delete task. Status: ${status}, Error: ${error}, Response: ${xhr.responseText}.`);
+            }
+          });
+        });
+
+        // Tamamlanmış görevleri silme
+        $("#delete-done").on("click", function () {
+          // Tüm görevleri çek
+          $.ajax({
+            url: "http://localhost:3000/todos",
+            method: "GET",
+            crossDomain: true,
+            success: function (data) {
+              const doneTodos = data.filter(todo => todo.completed).map(todo => todo.id);
+              if (doneTodos.length === 0) {
+                showError("No completed tasks to delete.");
+                return;
+              }
+              // Her tamamlanmış görevi sil
+              doneTodos.forEach(id => {
+                $.ajax({
+                  url: `http://localhost:3000/todos/${id}`,
+                  method: "DELETE",
+                  crossDomain: true,
+                  success: function () {
+                    loadTodos($(".todo-tab.active").data("filter"));
+                  },
+                  error: function (xhr, status, error) {
+                    showError(`Failed to delete completed tasks. Status: ${status}, Error: ${error}, Response: ${xhr.responseText}.`);
+                  }
+                });
+              });
+            },
+            error: function (xhr, status, error) {
+              showError(`Failed to load tasks for deletion. Status: ${status}, Error: ${error}, Response: ${xhr.responseText}.`);
+            }
+          });
+        });
+
+        // Tüm görevleri silme
+        $("#delete-all").on("click", function () {
+          // Tüm görevleri çek
+          $.ajax({
+            url: "http://localhost:3000/todos",
+            method: "GET",
+            crossDomain: true,
+            success: function (data) {
+              const allTodos = data.map(todo => todo.id);
+              if (allTodos.length === 0) {
+                showError("No tasks to delete.");
+                return;
+              }
+              // Her görevi sil
+              allTodos.forEach(id => {
+                $.ajax({
+                  url: `http://localhost:3000/todos/${id}`,
+                  method: "DELETE",
+                  crossDomain: true,
+                  success: function () {
+                    loadTodos($(".todo-tab.active").data("filter"));
+                  },
+                  error: function (xhr, status, error) {
+                    showError(`Failed to delete all tasks. Status: ${status}, Error: ${error}, Response: ${xhr.responseText}.`);
+                  }
+                });
+              });
+            },
+            error: function (xhr, status, error) {
+              showError(`Failed to load tasks for deletion. Status: ${status}, Error: ${error}, Response: ${xhr.responseText}.`);
+            }
+          });
+        });
+
+        // Sekme filtreleme (Tümü, Yapılacak, Tamamlanmış)
+        $(".todo-tab").on("click", function () {
+          $(".todo-tab").removeClass("active");
+          $(this).addClass("active");
+          loadTodos($(this).data("filter")); // Seçilen filtreye göre listeyi yenile
+        });
+
+        // Sayfayı ilk yüklediğinde görevleri listele
+        loadTodos();
+      });
+    </script>
+  </body>
+</html>

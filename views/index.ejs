@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Blog Sitesi</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Bootstrap CSS dosyasını dahil et: Stil ve layout için -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <!-- Font Awesome CSS dosyasını dahil et: İkonlar için -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Özel CSS dosyasını dahil et -->
+    <link rel="stylesheet" href="/css/index.css" />
+    <!-- Favicon dosyasını dahil et -->
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+      /* Genel sayfa stilini tanımla */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      /* İçerik konteynerini merkezde tut ve stil ver */
+      .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        text-align: center;
+      }
+      /* Tablo konteyneri için boşluk ayarla */
+      .table-container {
+        margin-top: 20px;
+      }
+      /* Tablo stilini tanımla */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      /* Tablo hücreleri için kenarlık ve padding ayarla */
+      th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      /* Tablo başlıkları için arka plan rengi */
+      th {
+        background-color: #f2f2f2;
+      }
+      /* Sosyal medya ikonları için stil */
+      .social-icons {
+        margin: 20px 0;
+      }
+      .social-icons a {
+        margin: 0 10px;
+        color: #333;
+        font-size: 20px;
+      }
+      /* Bülten formu için stil */
+      .newsletter {
+        margin: 20px 0;
+      }
+      .newsletter input {
+        padding: 5px;
+        margin-right: 10px;
+      }
+      .newsletter button {
+        padding: 5px 10px;
+        background-color: #333;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      /* Bağlantılar bölümü için stil */
+      .links {
+        display: inline-block;
+        margin: 10px;
+        text-align: left;
+      }
+      .links ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      .links ul li {
+        margin: 5px 0;
+      }
+      /* İşlemler sütunundaki bağlantılar ve ikonlar için stil */
+      .actions a {
+        margin-right: 5px;
+        color: #007bff;
+        text-decoration: none;
+      }
+      .actions a:hover {
+        text-decoration: underline;
+      }
+      .actions i {
+        color: #007bff;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Üstteki iki navbar'ı dahil et -->
+    <%- include('partials/navbar_first') %>
+    <%- include('partials/navbar_second') %>
+
+    <!-- Ana içerik konteyneri -->
+    <div class="container">
+      <h1>BLOG LİSTESİ</h1>
+      <!-- Blog listesini içeren tabloyu oluştur -->
+      <div class="table-container">
+        <table id="blog-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Başlık</th>
+              <th>İçerik</th>
+              <th>Yazar</th>
+              <th>Etiketler</th>
+              <th>Kategori</th>
+              <th>Beğeni</th>
+              <th>Beğenme</th>
+              <th>Tarih</th>
+              <th>İşlemler</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Blog verileri dinamik olarak buraya yüklenecek -->
+          </tbody>
+        </table>
+      </div>
+      <!-- Sosyal medya ikonlarını ekle -->
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-google"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+      <!-- Bülten abonelik formunu ekle -->
+      <div class="newsletter">
+        <p>Sign up for our newsletter</p>
+        <input type="email" placeholder="Email address" />
+        <button>Subscribe</button>
+      </div>
+      <!-- Örnek bir paragraf ekle -->
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sunt distinctio earum repellat quaerat voluptatibus placerat nam, commodi optio pariatur est quia magna eum harum corrupt dicta, aliquam sequi voluptate quas.</p>
+      <!-- Bağlantılar bölümlerini ekle -->
+      <div class="links">
+        <h4>LINKS</h4>
+        <ul>
+          <li>Link 1</li>
+          <li>Link 2</li>
+          <li>Link 3</li>
+          <li>Link 4</li>
+        </ul>
+      </div>
+      <div class="links">
+        <h4>LINKS</h4>
+        <ul>
+          <li>Link 1</li>
+          <li>Link 2</li>
+          <li>Link 3</li>
+          <li>Link 4</li>
+        </ul>
+      </div>
+      <div class="links">
+        <h4>LINKS</h4>
+        <ul>
+          <li>Link 1</li>
+          <li>Link 2</li>
+          <li>Link 3</li>
+          <li>Link 4</li>
+        </ul>
+      </div>
+      <div class="links">
+        <h4>LINKS</h4>
+        <ul>
+          <li>Link 1</li>
+          <li>Link 2</li>
+          <li>Link 3</li>
+          <li>Link 4</li>
+        </ul>
+      </div>
+      <!-- Sosyal medya ikonlarını tekrar ekle -->
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-google"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+      <!-- Bülten formunu tekrar ekle -->
+      <div class="newsletter">
+        <p>Sign up for our newsletter</p>
+        <input type="email" placeholder="Email address" />
+        <button>Subscribe</button>
+      </div>
+      <!-- Örnek bir paragraf ekle -->
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sunt distinctio earum repellat quaerat voluptatibus placerat nam, commodi optio pariatur est quia magna eum harum corrupt dicta, aliquam sequi voluptate quas.</p>
+    </div>
+
+    <!-- Footer'ı dahil et -->
+    <%- include('partials/footer') %>
+
+    <!-- Bootstrap ve Popper.js script'lerini dahil et -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <!-- jQuery script'ini dahil et: AJAX ve DOM manipülasyonu için -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Blog listesini yükleyen fonksiyon
+        const loadBlogs = () => {
+          // json-server'dan blog verilerini çek
+          $.ajax({
+            url: "http://localhost:3000/blogs",
+            method: "GET",
+            crossDomain: true,
+            success: function (data) {
+              console.log("Bloglar alındı:", data); // Alınan veriyi konsola yaz
+              const $blogTableBody = $("#blog-table tbody").empty(); // Tablo gövdesini temizle
+              if (data.length === 0) {
+                // Eğer veri yoksa, bir mesaj göster
+                $blogTableBody.append("<tr><td colspan='10'>No blogs found.</td></tr>");
+              } else {
+                // Her blog için bir tablo satırı oluştur
+                data.forEach((blog) => {
+                  $blogTableBody.append(`
+                    <tr>
+                      <td>${blog.id}</td>
+                      <td>${blog.title}</td>
+                      <td>${blog.content}</td>
+                      <td>${blog.author}</td>
+                      <td>${blog.tags ? blog.tags.join(", ") : ""}</td>
+                      <td>${blog.category}</td>
+                      <td>${blog.likes}</td>
+                      <td>${blog.dislikes}</td>
+                      <td>${blog.date}</td>
+                      <td class="actions">
+                        <a href="#">Düzenle</a> | 
+                        <a href="#">Sil</a> | 
+                        <a href="#"><i class="fas fa-image"></i></a> <!-- Fotoğraf ikonu -->
+                      </td>
+                    </tr>
+                  `);
+                });
+              }
+            },
+            error: function (xhr, status, error) {
+              // Hata durumunda konsola ve tabloya mesaj yaz
+              console.error(`Failed to load blogs. Status: ${status}, Error: ${error}, Response: ${xhr.responseText}`);
+              $("#blog-table tbody").html("<tr><td colspan='10'>Failed to load blogs. Please ensure json-server is running at http://localhost:3000.</td></tr>");
+            }
+          });
+        };
+
+        // Sayfayı ilk yüklediğinde blogları listele
+        loadBlogs();
+      });
+    </script>
+  </body>
+</html>
